@@ -19,84 +19,62 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            background-color: #0b0e14; /* Fallback color */
-            background-image: url('bg-anime.png');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: #0b0e14 url('bg-anime.png') center/cover no-repeat;
         }
 
-        /* ✨ Overlay gelap cinematic */
+        /* ✨ Overlay Cinematic (Biar teks kebaca tanpa card) */
         body::before {
             content: '';
             position: absolute;
             inset: 0;
-            background: rgba(0, 0, 0, 0.45);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.6));
             z-index: 0;
-        }
-
-        /* ✨ Glow lembut */
-        body::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 40%, rgba(255, 180, 220, 0.2), transparent 70%);
-            pointer-events: none;
-            z-index: 1;
         }
 
         .container {
             z-index: 2;
             padding: 20px;
-            width: 90%;
-            max-width: 600px;
-            animation: fadeUp 2s ease forwards;
-            /* Efek box transparan tipis */
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(5px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+            max-width: 800px;
+            animation: fadeUp 2.5s ease forwards;
         }
 
         h1 {
-            font-size: clamp(32px, 8vw, 56px); /* Ukuran adaptif otomatis */
+            font-size: clamp(34px, 10vw, 64px); 
             font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.1;
             margin-bottom: 10px;
             background: linear-gradient(45deg, #ffd6ec, #ffffff, #ffcce6);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 20px rgba(255, 180, 220, 0.5));
+            /* Shadow kuat biar teks tajam tanpa card */
+            filter: drop-shadow(0 0 30px rgba(255, 180, 220, 0.6));
         }
 
         .heart {
-            font-size: clamp(40px, 10vw, 50px);
-            margin: 15px 0;
+            font-size: clamp(40px, 12vw, 55px);
+            margin: 20px 0;
             animation: beat 1.6s infinite;
             filter: drop-shadow(0 0 15px #ff6fa5);
             display: inline-block;
         }
 
         p {
-            font-size: clamp(16px, 4.5vw, 22px);
-            line-height: 1.6;
+            font-size: clamp(16px, 5vw, 24px);
+            line-height: 1.8;
             opacity: 0.9;
             font-weight: 300;
-        }
-
-        /* 📱 Khusus layar HP sangat kecil */
-        @media (max-width: 380px) {
-            .container { padding: 15px; }
-            h1 { font-size: 28px; }
+            padding: 0 10px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
         @keyframes beat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            50% { transform: scale(1.25); }
         }
 
         @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -112,7 +90,7 @@
         }
 
         @keyframes twinkle {
-            from { opacity: 0.1; transform: scale(0.8); }
+            from { opacity: 0.2; transform: scale(0.8); }
             to { opacity: 1; transform: scale(1.2); }
         }
 
@@ -122,24 +100,24 @@
             top: -50px;
             animation: fall linear forwards;
             z-index: 1;
-            user-select: none;
+            pointer-events: none;
         }
 
         @keyframes fall {
             to { 
-                transform: translateY(110vh) translateX(100px) rotate(720deg); 
+                transform: translateY(110vh) translateX(150px) rotate(720deg); 
                 opacity: 0;
             }
         }
 
         .footer {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             width: 100%;
-            font-size: 12px;
-            letter-spacing: 1px;
+            font-size: 11px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            opacity: 0.5;
+            opacity: 0.4;
             z-index: 2;
         }
     </style>
@@ -150,7 +128,7 @@
     <h1>Selamat Tidur Cantikku</h1>
     <div class="heart">❤️</div>
     <p>
-        Pejamkan matamu ya sayang…<br><br>
+        Pejamkan matamu ya sayang…<br>
         Semoga tidurmu nyenyak dan mimpimu indah ✨<br>
         Aku selalu ada untukmu ♡
     </p>
@@ -159,8 +137,8 @@
 <div class="footer">Dibuat dengan cinta</div>
 
 <script>
-    /* ⭐ Bintang yang lebih efisien */
-    const starCount = window.innerWidth < 600 ? 80 : 150; // Lebih sedikit di HP biar gak berat
+    /* ⭐ Bintang adaptif layar */
+    const starCount = window.innerWidth < 600 ? 70 : 140;
     for(let i=0; i<starCount; i++){
         const s = document.createElement('div');
         s.className = 'star';
@@ -176,18 +154,13 @@
         p.className = 'petal';
         p.innerHTML = '🌸';
         p.style.left = Math.random() * 100 + 'vw';
-        p.style.fontSize = (Math.random() * 10 + 15) + 'px';
-        p.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        p.style.opacity = Math.random() * 0.5 + 0.5;
+        p.style.fontSize = (Math.random() * 12 + 12) + 'px';
+        p.style.animationDuration = (Math.random() * 5 + 6) + 's';
         document.body.appendChild(p);
-        
-        // Hapus elemen setelah jatuh agar ram tetap lega
-        setTimeout(() => p.remove(), 10000);
+        setTimeout(() => p.remove(), 11000);
     }
 
-    // Interval lebih lambat di HP agar mulus
-    const interval = window.innerWidth < 600 ? 600 : 300;
-    setInterval(createPetal, interval);
+    setInterval(createPetal, window.innerWidth < 600 ? 500 : 300);
 </script>
 
 </body>
